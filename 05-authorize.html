@@ -1,0 +1,32 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    const USER_PERMISSIONS = ['read:products', 'read:sales', 'read:transactions'];
+
+    class Authorize extends React.Component{
+        constructor(props){
+            super(props);
+        }
+        render(){
+            if(USER_PERMISSIONS.includes(this.props.permission)) return this.props.render();
+            return 'Not Authorized';
+        }
+    }
+
+    function ProductList(){
+        return <h1>This is the products list</h1>
+    }
+
+    class App extends React.Component {
+        render(){
+            return (
+               <Authorize permission='read:products' render={ () => <ProductList /> }/>
+            )
+        }
+    }
+    ReactDOM.render(<App />, document.querySelector('#root'));
+</script>

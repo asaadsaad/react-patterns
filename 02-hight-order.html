@@ -1,0 +1,32 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    const applicationName = 'App Zero'
+    const SimpleComponent = ({name, appName}) => <div>App Name is: {appName}, My name is {name}</div>
+    
+    const addAppName = (Component)=>{
+        return class Enhanced extends React.Component{
+            render(){
+                return(
+                    <p style={{color: 'red'}}>
+                        <Component {...this.props}
+                            appName={applicationName}/>
+                    </p>
+                )
+            }
+        }
+    }
+
+    const EnhancedComponent = addAppName(SimpleComponent)
+    
+    const App = (props) => {
+        return (
+            <EnhancedComponent name="Asaad" />
+        )
+    }
+    ReactDOM.render(<App />, document.querySelector('#root'));
+</script>

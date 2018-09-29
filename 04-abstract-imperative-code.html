@@ -1,0 +1,32 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+    class DataProvider extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {data: null}
+            setTimeout(() => {
+                this.setState({data: 'yes'})
+            }, 5000);
+        }
+        render(){
+            if(this.state.data === null) return null;
+            return this.props.render(this.state.data)
+        }
+    }
+
+
+    class App extends React.Component {
+        render(){
+            return (
+               <DataProvider render={ data => <h1>This is the Data!</h1> }/>
+            )
+        }
+    }
+    ReactDOM.render(<App />, document.querySelector('#root'));
+</script>

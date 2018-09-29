@@ -1,0 +1,44 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    // render prop pattern
+    const TodoList = ({todos, render}) => {
+        return(
+            <section>
+                <ul>
+                    { todos.map((todo, i) => <li key={i}>{render(todo)}</li>) }
+                </ul>
+            </section>
+        )
+    }
+
+    // notice how App does not expose its data (todos) to TodoList
+    // TodoList has no idea that there are 'text' and 'status' properties
+    // this pattern promotes code reuse for TodoList
+    class App extends React.Component {
+        constructor(props){
+            super(props)
+            this.todos = [
+                {text: 'Walk the dog', status: 'progress'},
+                {text: 'Wash the car', status: 'done'}
+            ]
+        }
+
+        render(){
+            return (
+               <TodoList 
+                todos={this.todos} 
+                render={(todo)=> { 
+                    return (todo.status==='done') ? <b>{todo.text}</b>: todo.text
+                    }
+                  } 
+                />
+            )
+        }
+    }
+    ReactDOM.render(<App />, document.querySelector('#root'));
+</script>

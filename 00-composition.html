@@ -1,0 +1,37 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    // const Header = () => <Navigation />
+    
+    // const Navigation = () => <nav>Navigation Here</nav>
+    
+    // const App = () => <Header/>
+
+    // ReactDOM.render(<App />, document.querySelector('#root'));
+</script>
+
+<!-- /*  What if I want header without Navigation? we cannot! 
+    Header is tightly-coupled with Navigation and hard to test */ -->
+
+<script type="text/babel">
+    const Header = ({children}) => <div>{children}</div>
+    
+    const Navigation = () => <nav>Navigation Here</nav>
+    
+    const App = () => {
+        return (
+            <div>
+                <Header>
+                    <Navigation />
+                </Header>
+                {/*  Using React childern API, now we can use Header without Navigation */} 
+                <Header />
+            </div>
+        )
+    }
+    ReactDOM.render(<App />, document.querySelector('#root'));
+</script>
